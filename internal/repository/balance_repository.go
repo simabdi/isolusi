@@ -40,7 +40,7 @@ func (r *balanceRepository) Update(data entity.Balance) (entity.Balance, error) 
 
 func (r *balanceRepository) GetByNoRekening(noRekening string) (entity.Balance, error) {
 	var balance entity.Balance
-	err := r.db.Where("no_rekening = ?", noRekening).First(&balance).Error
+	err := r.db.Where("no_rekening = ?", noRekening).Find(&balance).Error
 	if err != nil {
 		return entity.Balance{}, err
 	}
