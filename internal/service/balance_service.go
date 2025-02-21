@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	log "github.com/sirupsen/logrus"
 	"isolusi/internal/model/entity"
 	"isolusi/internal/model/request"
 	"isolusi/internal/repository"
@@ -47,6 +48,11 @@ func (s *balanceService) Debit(input request.TransactionRequest) (entity.Balance
 		return entity.Balance{}, err
 	}
 
+	log.WithFields(log.Fields{
+		"Balance Input": input,
+		"Balance Debit": balance,
+	}).Info("Update balance tarik saldo")
+
 	transaction := entity.BalanceTransaction{
 		NoRekening:     balance.NoRekening,
 		Nominal:        input.Nominal,
@@ -76,6 +82,11 @@ func (s *balanceService) Kredit(input request.TransactionRequest) (entity.Balanc
 	if err != nil {
 		return entity.Balance{}, err
 	}
+
+	log.WithFields(log.Fields{
+		"Balance Input":  input,
+		"Balance Kredit": balance,
+	}).Info("Update balance tabung saldo")
 
 	transaction := entity.BalanceTransaction{
 		NoRekening:     balance.NoRekening,

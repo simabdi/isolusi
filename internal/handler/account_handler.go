@@ -2,6 +2,7 @@ package handler
 
 import (
 	"github.com/gofiber/fiber/v2"
+	log "github.com/sirupsen/logrus"
 	"isolusi/internal/helper"
 	"isolusi/internal/model/request"
 	"isolusi/internal/model/resource"
@@ -19,6 +20,10 @@ func NewAccountHandler(accountService service.AccountService) *accountHandler {
 
 func (h *accountHandler) Daftar(ctx *fiber.Ctx) error {
 	var input request.RegisterRequest
+
+	log.WithFields(log.Fields{
+		"input": input,
+	}).Info("Request JSON daftar")
 
 	err := ctx.BodyParser(&input)
 	if err != nil {

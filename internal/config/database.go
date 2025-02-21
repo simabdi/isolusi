@@ -14,6 +14,8 @@ func Connection() *gorm.DB {
 		log.WithFields(log.Fields{
 			"Error": err.Error(),
 		}).Warning("Failed to create connection")
+
+		panic(err.Error())
 	}
 
 	if db != nil {

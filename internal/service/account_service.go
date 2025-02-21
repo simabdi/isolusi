@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	log "github.com/sirupsen/logrus"
 	"isolusi/internal/helper"
 	"isolusi/internal/model/entity"
 	"isolusi/internal/model/request"
@@ -39,6 +40,10 @@ func (s *accountService) Store(input request.RegisterRequest) (entity.Account, e
 		NoRekening: strconv.Itoa(helper.GenerateRand(6)),
 	}
 
+	log.WithFields(log.Fields{
+		"Payload Daftar": payload,
+	}).Info("Payload daftar")
+
 	save, err := s.accountRepository.Store(payload)
 	if err != nil {
 		return entity.Account{}, err
@@ -48,6 +53,10 @@ func (s *accountService) Store(input request.RegisterRequest) (entity.Account, e
 		NoRekening: payload.NoRekening,
 		Saldo:      0,
 	}
+
+	log.WithFields(log.Fields{
+		"Payload Balance": balance,
+	}).Info("Payload balance")
 
 	_, err = s.balanceRepository.Store(balance)
 	if err != nil {
